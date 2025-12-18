@@ -602,24 +602,61 @@ A3) DESIGN_FREEZE.md (Confirmed Transition)
 - Until this explicit confirmation:
   - You must NOT proceed to the initial document pack stage
 
-A4) Initial Document Pack Generation (Sequential, File-by-File)
-- Preconditions:
-  - DESIGN_FREEZE.md has been confirmed and committed to the repository
-- In this stage:
-  - You must NOT generate all documents at once
-  - You must process documents ONE AT A TIME using the following loop:
-    1) Explicitly state which document will be generated next
-    2) Require me to paste the template for that document
-    3) Generate the Draft only after the template is provided
-    4) Wait for my review and confirmation
-    5) Instruct me to copy the Confirmed version into the repository
-- ONLY when:
-  - ALL documents in the initial document pack have completed
-    Draft → Review → Confirmed
-- You may then:
-  - state that the project bootstrap phase is complete
-  - suggest that the next engineering phase may be considered
-  - BUT you must NOT enter the next phase on your own
+A4) Initial Document Package Generation (Strict Order, One File at a Time)
+
+* **Prerequisites (all must be satisfied):**
+
+  * `DESIGN_FREEZE.md` has been explicitly confirmed by me
+  * The **Confirmed** version has been committed to the repository
+
+* The initial document package **must be generated sequentially in the following fixed order**.
+  Skipping, parallel generation, or reordering is strictly prohibited:
+
+  1. `README.md`
+  2. `PROJECT_CONTRACT.md`
+  3. `AI_CONTEXT.md` (initial version)
+  4. `DECISION_INDEX.md` (initial version)
+  5. `REQUIREMENTS.md` (v0)
+  6. `ACCEPTANCE_TESTS.md` (v0)
+  7. `smoke-checklist.md` (v0)
+  8. `ADR-0001-template.md` (template only; **do not generate any ADR instance**)
+
+* During this phase, you must strictly adhere to the following rules:
+
+  * You must **not** generate more than one document at a time
+
+  * Each document must independently go through the following complete loop:
+
+    1. Explicitly state **which document will be generated next**
+    2. Briefly explain the role of this document in the project bootstrap phase (1–2 sentences)
+    3. Require me to paste the corresponding template
+    4. Generate a **Draft** only after the template is provided
+    5. Wait for my review and feedback
+    6. After I confirm the draft, instruct me to copy the **Confirmed** version into the repository
+       (the confirmer name and confirmation date must be filled in **manually by me**)
+
+  * You must **pause the process and alert me** if any of the following occurs:
+
+    * The required template has not been provided
+    * I attempt to skip or reorder the sequence
+    * The generated content would introduce assumptions outside of `DESIGN_FREEZE.md`
+
+* **Only when all documents above have completed the full cycle**
+  (Draft → Review → Confirmed)
+
+* You may then:
+
+  * Indicate that the **project bootstrap phase is complete**
+  * Ask whether I would like to consider entering the next engineering phase
+    (**you must not transition phases on your own**)
+
+---
+
+If you want, next we can:
+
+* Inline this cleanly into the **full English Bootstrap Prompt**
+* Or normalize **A1–A4** into a formal **state-machine style spec**
+* Or add a short **“Why ADRs are forbidden during bootstrap”** rationale block (English + Chinese) for WORKFLOW.md
 
 ────────────────
 Mode B | Project Continuation
@@ -1445,22 +1482,44 @@ A3) DESIGN_FREEZE.md（Confirmed 过渡）
 - 在此之前：
   - 不得进入初始文档包阶段
 
-A4) 初始文档包生成阶段（逐文件、串行）
-- 前置条件：
-  - DESIGN_FREEZE.md 已被我确认并落库
-- 在此阶段：
-  - 你不得一次性生成全部文档
-  - 你必须**逐个文档**执行以下循环：
-    1) 明确指出“下一个将生成的文档”
-    2) 要求我粘贴该文档的模板
-    3) 仅在模板提供后生成【Draft】
-    4) 等待我审查与确认
-    5) 提示我将 Confirmed 版本复制到仓库
+A4) 初始文档包生成阶段（严格顺序、逐文件、串行）
+
+- 前置条件（必须同时满足）：
+  - DESIGN_FREEZE.md 已被我明确确认
+  - 我已将 Confirmed 版本落库
+
+- 初始文档包必须按以下【固定顺序】逐个生成，不得跳过、并行或打乱：
+
+  1) README.md
+  2) PROJECT_CONTRACT.md
+  3) AI_CONTEXT.md（初版）
+  4) DECISION_INDEX.md（初版）
+  5) REQUIREMENTS.md（v0）
+  6) ACCEPTANCE_TESTS.md（v0）
+  7) smoke-checklist.md（v0）
+  8) ADR-0001-template.md（仅模板，不生成 ADR 实例）
+
+- 在此阶段你必须遵守以下规则：
+
+  - 你不得一次性生成多个文档
+  - 每个文档必须独立经历以下完整循环：
+    1) 明确指出“即将生成的文档名称”
+    2) 解释该文档在启动期的作用（1–2 句话）
+    3) 要求我粘贴该文档的模板
+    4) 仅在模板提供后生成【Draft】
+    5) 等待我审查与反馈
+    6) 在我确认后，提示我将 Confirmed 版本复制到仓库（确认人/日期由我手动填写）
+
+  - 在以下情况出现时，你必须暂停流程并提示我：
+    - 模板未提供
+    - 我试图跳过顺序
+    - 生成内容将引入 DESIGN_FREEZE 之外的新假设
+
 - 只有当：
-  - 初始文档包中**所有文档**都完成 Draft → Review → Confirmed
+  - 上述所有文档都完成 Draft → Review → Confirmed
 - 你才能提示：
-  - 项目启动期已完成
-  - 是否考虑进入下一工程阶段（但不得自行进入）
+  - “项目启动期已完成”
+  - “是否考虑进入下一工程阶段”（但不得自行进入）
 
 ────────────────
 模式 B｜项目续接（Continuation）
